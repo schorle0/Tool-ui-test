@@ -1,9 +1,28 @@
 import Link from "next/link";
 import { LinkPreview } from "@/components/tool-ui/link-preview";
 
+const GHOST = [
+  // base ghost surface
+  "[&>div]:bg-transparent",
+  "[&>div]:border-dashed",
+  "[&>div]:border-border/50",
+  "[&>div]:shadow-none",
+  // smooth transition on all changing properties
+  "[&>div]:transition-all",
+  "[&>div]:duration-300",
+  "[&>div]:ease-out",
+  // hover: fill appears, border solidifies, shadow blooms
+  "[&>div]:hover:bg-muted/20",
+  "[&>div]:hover:border-solid",
+  "[&>div]:hover:border-border",
+  "[&>div]:hover:shadow-lg",
+  // hover: subtle upward lift
+  "[&>div]:hover:-translate-y-0.5",
+].join(" ");
+
 const previews = [
   {
-    id: "lp-1",
+    id: "g-1",
     href: "https://nextjs.org/docs/app/getting-started/installation",
     title: "Next.js App Router — Installation",
     description:
@@ -15,7 +34,7 @@ const previews = [
     ratio: "16:9" as const,
   },
   {
-    id: "lp-2",
+    id: "g-2",
     href: "https://tailwindcss.com/docs/installation/using-vite",
     title: "Tailwind CSS — Using Vite",
     description:
@@ -27,7 +46,7 @@ const previews = [
     ratio: "4:3" as const,
   },
   {
-    id: "lp-3",
+    id: "g-3",
     href: "https://ui.shadcn.com/docs",
     title: "shadcn/ui",
     description:
@@ -36,7 +55,7 @@ const previews = [
     ratio: "16:9" as const,
   },
   {
-    id: "lp-4",
+    id: "g-4",
     href: "https://www.tool-ui.com/docs/quick-start",
     title: "Tool UI — Quick Start",
     description:
@@ -48,66 +67,67 @@ const previews = [
   },
 ];
 
-export default function Home() {
+export default function GhostPage() {
   return (
-    <main className="min-h-screen bg-muted/40 px-6 py-16">
+    <main className="min-h-screen bg-background px-6 py-16">
       <div className="mx-auto max-w-3xl space-y-12">
         <header className="space-y-4">
           <nav className="flex gap-4 text-sm text-muted-foreground">
-            <span className="text-foreground font-medium">Default</span>
-            <Link href="/ghost" className="hover:text-foreground transition-colors">
-              Ghost
+            <Link href="/" className="hover:text-foreground transition-colors">
+              Default
             </Link>
+            <span className="text-foreground font-medium">Ghost</span>
             <Link href="/editorial" className="hover:text-foreground transition-colors">
               Editorial
             </Link>
           </nav>
           <div className="space-y-2">
             <h1 className="text-3xl font-semibold tracking-tight">
-              tool-ui showcase
+              tool-ui showcase — ghost
             </h1>
             <p className="text-muted-foreground">
-              Static demo of the{" "}
+              Same{" "}
               <code className="rounded bg-muted px-1 py-0.5 text-sm font-mono">
                 LinkPreview
               </code>{" "}
-              component from{" "}
-              <a
-                href="https://www.tool-ui.com"
-                className="underline underline-offset-4"
-              >
-                tool-ui.com
-              </a>
-              .
+              component with{" "}
+              <code className="rounded bg-muted px-1 py-0.5 text-sm font-mono">
+                className
+              </code>{" "}
+              overrides applied via{" "}
+              <code className="rounded bg-muted px-1 py-0.5 text-sm font-mono">
+                [&gt;div]:
+              </code>{" "}
+              child selectors.
             </p>
           </div>
         </header>
 
         <section className="space-y-6">
           <h2 className="text-xl font-medium">With image — 16:9</h2>
-          <LinkPreview {...previews[0]} />
+          <LinkPreview {...previews[0]} className={GHOST} />
         </section>
 
         <section className="space-y-6">
           <h2 className="text-xl font-medium">With image — 4:3</h2>
-          <LinkPreview {...previews[1]} />
+          <LinkPreview {...previews[1]} className={GHOST} />
         </section>
 
         <section className="space-y-6">
           <h2 className="text-xl font-medium">No image</h2>
-          <LinkPreview {...previews[2]} />
+          <LinkPreview {...previews[2]} className={GHOST} />
         </section>
 
         <section className="space-y-6">
           <h2 className="text-xl font-medium">With image — 1:1 (square)</h2>
-          <LinkPreview {...previews[3]} />
+          <LinkPreview {...previews[3]} className={GHOST} />
         </section>
 
         <section className="space-y-6">
           <h2 className="text-xl font-medium">Side by side</h2>
           <div className="flex flex-wrap gap-4">
-            <LinkPreview {...previews[0]} id="lp-grid-1" />
-            <LinkPreview {...previews[2]} id="lp-grid-2" />
+            <LinkPreview {...previews[0]} id="g-grid-1" className={GHOST} />
+            <LinkPreview {...previews[2]} id="g-grid-2" className={GHOST} />
           </div>
         </section>
       </div>
